@@ -12,6 +12,15 @@ class Macvim < Formula
   option "override-system-vim", "Override system vim"
   option "with-cscope", "Build with Cscope support"
   option "with-lua", "Build with Lua scripting support"
+  option "with-breakindent-patch", "Build with breakindent patch."
+
+  def patches
+    result = Hash.new { |hash, key| hash[key] = [] }
+    if ARGV.include? '--with-breakindent-patch'
+      result[:p1] << 'https://retracile.net/raw-attachment/blog/2011/08/23/21.30/vim-7.3.285-breakindent.patch'
+    end
+    result
+  end
 
   depends_on 'cscope' if build.include? 'with-cscope'
   depends_on 'lua' if build.include? 'with-lua'
